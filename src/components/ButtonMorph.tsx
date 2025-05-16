@@ -1,34 +1,37 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 interface ButtonMorphProps {
   showChoices: boolean;
   disabled?: boolean;
+  inputMode?: boolean;
+  sending?: boolean;
+  message?: string;
   onYes: () => void;
   onNo: () => void;
   onClickMe: () => void;
+  onSend?: (e: React.FormEvent) => void;
+  onInputChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const ButtonMorph: React.FC<ButtonMorphProps> = ({
   showChoices,
   disabled = false,
+  inputMode = false,
+  sending = false,
+  message = "",
   onYes,
   onNo,
   onClickMe,
+  onSend,
+  onInputChange,
 }) => {
+  // By design, the input/send flow is now handled in AnimatedLetter file
   return (
     <div className="flex flex-row items-center justify-center gap-4 mt-6 min-h-[44px]">
-      {!showChoices ? (
-        <Button
-          size="lg"
-          onClick={onClickMe}
-          className="px-10 shadow-md bg-pink-400 text-white font-bold text-lg hover:bg-pink-500 animate-fade-in"
-          disabled={disabled}
-        >
-          Click Me
-        </Button>
-      ) : (
+      {showChoices && (
         <>
           <Button
             size="lg"
@@ -54,3 +57,4 @@ const ButtonMorph: React.FC<ButtonMorphProps> = ({
 };
 
 export default ButtonMorph;
+

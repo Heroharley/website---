@@ -1,21 +1,52 @@
 
 import React, { useEffect, useState } from "react";
-import { Heart } from "lucide-react";
+
+// CUSTOM heart shape using SVG, pink-red with white stroke
+const CustomHeart: React.FC<{ size: number; style?: React.CSSProperties }> = ({
+  size,
+  style,
+}) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 44 40"
+    fill="none"
+    style={style}
+  >
+    <path
+      d="M22 38s-13.43-10.39-17.22-16.01C1.08 15.47 3.38 8.5 10.46 8.5c3.98 0 6.53 3.15 7.41 4.55C18.75 10.48 21.34 7.5 26.01 7.5c6.72 0 9.08 7.03 5.82 13.5C35.43 27.61 22 38 22 38Z"
+      fill="url(#heartGradient)"
+      stroke="#fff"
+      strokeWidth="2"
+    />
+    <defs>
+      <linearGradient id="heartGradient" x1="22" y1="6" x2="22" y2="38" gradientUnits="userSpaceOnUse">
+        <stop stopColor="#ff82a9" />
+        <stop offset="0.7" stopColor="#ea384c" />
+        <stop offset="1" stopColor="#ffdee2" />
+      </linearGradient>
+    </defs>
+  </svg>
+);
 
 interface HeartType {
   left: number;
   delay: number;
   size: number;
+  upSpeed: number;
+  sideDrift: number;
 }
 
 const random = (min: number, max: number) =>
   Math.floor(Math.random() * (max - min + 1)) + min;
 
-const generateHearts = (count = 14): HeartType[] =>
+const generateHearts = (count = 15): HeartType[] =>
   Array.from({ length: count }).map(() => ({
     left: random(10, 90),
-    delay: random(0, 800),
-    size: random(24, 42),
+    delay: random(0, 700),
+    size: random(28, 50),
+    upSpeed: random(1600, 2200), // ms
+    sideDrift: random(-25, 25),
   }));
 
 const HeartBurst: React.FC<{ trigger: boolean }> = ({ trigger }) => {
@@ -34,28 +65,26 @@ const HeartBurst: React.FC<{ trigger: boolean }> = ({ trigger }) => {
           className="absolute"
           style={{
             left: `${h.left}%`,
-            bottom: "120px",
-            animation: "heart-burst 1.8s cubic-bezier(.52,.2,.16,1) both",
+            bottom: "140px",
+            animation: `heart-balloon ${h.upSpeed}ms cubic-bezier(.3,.4,.39,1) both`,
             animationDelay: `${h.delay}ms`,
             zIndex: 60,
+            willChange: "transform, opacity",
           }}
         >
-          <Heart
-            size={h.size}
-            color="#FF89A2"
-            fill="#FFDEE2"
-            strokeWidth={1.3}
-            className="drop-shadow-xl"
-          />
+          <CustomHeart size={h.size} />
         </span>
       ))}
+      {/* Keyframe for upward float and a little wobble */}
       <style>
         {`
-        @keyframes heart-burst {
-          0%   { transform: translateY(0) scale(0.8) rotate(-8deg); opacity: 1; }
-          40%  { transform: translateY(-80px) scale(1.1) rotate(6deg); opacity: 1; }
-          70%  { transform: translateY(-240px) scale(1.05) rotate(-3deg); opacity: 0.85; }
-          100% { transform: translateY(-340px) scale(0.6) rotate(13deg); opacity: 0; }
+        @keyframes heart-balloon {
+          0%   { transform: translateY(0) scale(0.92) rotate(-6deg); opacity: 1; }
+          8%   { transform: translateY(-15px) scale(1.15) rotate(0deg); }
+          20%  { opacity: 1; }
+          55%  { transform: translateY(-140px) scale(0.95) rotate(8deg); opacity: 0.88;}
+          75%  { transform: translateY(-290px) scale(1.07) rotate(-8deg); }
+          100% { transform: translateY(-360px) scale(0.9) rotate(8deg); opacity: 0; }
         }
         `}
       </style>
@@ -64,3 +93,4 @@ const HeartBurst: React.FC<{ trigger: boolean }> = ({ trigger }) => {
 };
 
 export default HeartBurst;
+
