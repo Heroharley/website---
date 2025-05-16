@@ -79,7 +79,7 @@ const Index = () => {
   // Valentine message
   const letterMsg = (
     <span className="text-pink-700 font-valentine text-center text-2xl md:text-3xl animate-fade-in drop-shadow-lg tracking-wide">
-      Will you be my Valentine?
+      WWSWSDWSWS
     </span>
   );
 
@@ -117,7 +117,7 @@ const Index = () => {
             ) : (
               // Letter stays open but actual input goes below the envelope
               <span className="text-pink-700 font-bold text-lg text-center">
-                Writing your Valentine message...
+                OKOWEK
               </span>
             )}
           </AnimatedLetter>
@@ -131,14 +131,14 @@ const Index = () => {
             style={{ minWidth: 300 }}
           >
             <label className="w-full text-base text-pink-800 text-center font-semibold mb-1">
-              Write your Valentine message
+              TSTSTSTs
             </label>
             <Input
               type="text"
               value={message}
               className="w-full rounded-xl border-2 border-pink-100 bg-white/95 text-pink-800 placeholder:text-pink-300 px-4 py-3 focus:ring-2 focus:ring-pink-300 text-base transition-all shadow-md"
               onChange={(e) => setMessage(e.target.value)}
-              placeholder="Type your sweetest message here…"
+              placeholder="Type a Message / Name , to send back."
               disabled={sending}
               maxLength={200}
               autoFocus
@@ -187,10 +187,10 @@ const Index = () => {
           <div className="mt-7 text-xl font-semibold transition-all duration-500 animate-fade-in drop-shadow-sm text-center">
             {result === "yes"
               ? sentMsg
-                ? "💗 Message delivered!"
+                ? "Message delivered!"
                 : ""
               : result === "no"
-              ? "Awww... Maybe next time."
+              ? "Maybe next time. :("
               : ""}
           </div>
         )}
