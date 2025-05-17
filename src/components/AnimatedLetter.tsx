@@ -32,8 +32,8 @@ const AnimatedLetter: React.FC<AnimatedLetterProps> = ({
       {/* Envelope bottom */}
       <div
         className={cn(
-          "absolute bottom-0 left-0 w-full rounded-b-[2.3rem] shadow-2xl border-2 transition-all duration-700",
-          wider ? "h-56" : "h-32",
+          "absolute bottom-0 left-0 w-full rounded-b-[2.3rem] shadow-2xl border-2 transition-all duration-700 z-40",
+          wider ? "h-40" : "h-56",
           valentine
             ? "bg-gradient-to-b from-[#FFDEE2] via-white to-[#fd91b4] border-pink-200"
             : "bg-white border-gray-200"
@@ -42,7 +42,7 @@ const AnimatedLetter: React.FC<AnimatedLetterProps> = ({
       {/* Envelope top flap */}
       <div
         className={cn(
-          "absolute top-0 left-0 w-full z-30 origin-bottom transition-transform duration-700 border-2",
+          "absolute top-0 left-0 w-full z-40 origin-bottom transition-transform duration-700 border-2",
           valentine
             ? "bg-gradient-to-b from-pink-400 to-pink-100 border-pink-200"
             : "bg-gradient-to-b from-pink-100 to-white border-gray-200",
@@ -58,7 +58,7 @@ const AnimatedLetter: React.FC<AnimatedLetterProps> = ({
       {/* Letter inside the envelope */}
       <div
         className={cn(
-          "absolute left-[3%] px-10 flex items-center justify-center transition-all duration-700 border shadow-lg z-40",
+          "absolute left-[3%] px-10 flex items-center justify-center transition-all duration-700 border shadow-lg z-30",
           wider
             ? "top-8 w-[94%] h-48 rounded-[34px]"
             : "top-7 w-[92%] h-32 rounded-xl",
@@ -75,31 +75,6 @@ const AnimatedLetter: React.FC<AnimatedLetterProps> = ({
       >
         <div className="font-semibold text-lg text-gray-700 w-full">{children}</div>
       </div>
-      {/* Valentine heart border & decor */}
-      {valentine && (
-        <div className="absolute left-0 top-0 w-full h-full pointer-events-none z-20">
-          <svg width="100%" height="100%" viewBox="0 0 415 260" className="absolute opacity-70">
-            {/* Decorative edge */}
-            <polyline
-              points="4,36 206,136 410,36"
-              fill="none"
-              stroke="#ff91b3"
-              strokeWidth="6"
-            />
-            {/* Pink hearts on the fold */}
-            {[54, 105, 210, 315, 370].map((x, i) => (
-              <g key={i}>
-                <path
-                  d="M6 6 C10 0, 20 0, 20 6 Q18 14, 13 22 Q8 14, 6 6 Z"
-                  fill="#FF89A2"
-                  transform={`translate(${x-13},12) scale(${i%2===0?0.7:1})`}
-                  opacity="0.8"
-                />
-              </g>
-            ))}
-          </svg>
-        </div>
-      )}
     </div>
   );
 };

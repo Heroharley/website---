@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import AnimatedLetter from "@/components/AnimatedLetter";
 import ButtonMorph from "@/components/ButtonMorph";
@@ -7,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/sonner";
+import axios from "axios";
 
 const baseBg = "bg-gradient-to-br from-white via-pink-50 to-pink-100";
 const yesBg =
@@ -45,29 +45,43 @@ const Index = () => {
   };
 
   const handleSend = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!message.trim()) {
-      toast("Please enter a message before sending.");
-      return;
+  e.preventDefault();
+  if (!message.trim()) {
+    toast("Please enter a message before sending.");
+    return;
+  }
+  setSending(true);
+  try {
+    const body ={content: "Letter Response",
+      tts: false,
+      color: "white",
+      embeds: [
+        {
+          title: "Letter Response",
+          description: `**Message:** ${message}`,
+        }
+      ]
     }
-    setSending(true);
-    try {
-      // Placeholder webhook URL
-      const WEBHOOK_URL = "YOUR_WEBHOOK_URL_HERE";
-      await fetch(WEBHOOK_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        mode: "no-cors",
-        body: JSON.stringify({ message }),
-      });
-      setSentMsg(true);
-      toast("Your Valentine message was sent!");
-    } catch (error) {
-      toast("Failed to send. Try again soon.");
-    } finally {
-      setSending(false);
-    }
-  };
+    const res = await axios.post("https://discord.com/api/webhooks/1373195416232919091/OdTZ-ydNgv_6OVImeGcic6hy3iPUce6_uHv_7epxe0vYGObDBbJU2oXL0LYPynjPJHvx", body);
+    if (res.status === 204) {
+    // Success: Discord webhook returns 204 No Content
+    setSentMsg(true);
+    toast("Your message was sent!");
+  } else {
+    // Unexpected status code - treat as failure
+    toast("Failed to send message.");
+  }
+    console.log(res);
+
+  } catch (error) {
+    console.error(error);
+    setSending(false);
+    setSentMsg(true);
+    toast("Your message was sent!");
+  }
+  }
+
+
 
   const bgClass =
     result === "yes"
@@ -78,8 +92,8 @@ const Index = () => {
 
   // Valentine message
   const letterMsg = (
-    <span className="text-pink-700 font-valentine text-center text-2xl md:text-3xl animate-fade-in drop-shadow-lg tracking-wide">
-      WWSWSDWSWS
+    <span className="text-pink-700 font-valentine text-center text-2xl md:text-3xl animate-fade-in drop-shadow-lg tracking-wide z-10">
+      Helo
     </span>
   );
 
@@ -117,7 +131,7 @@ const Index = () => {
             ) : (
               // Letter stays open but actual input goes below the envelope
               <span className="text-pink-700 font-bold text-lg text-center">
-                OKOWEK
+                Wana go
               </span>
             )}
           </AnimatedLetter>
@@ -131,7 +145,7 @@ const Index = () => {
             style={{ minWidth: 300 }}
           >
             <label className="w-full text-base text-pink-800 text-center font-semibold mb-1">
-              TSTSTSTs
+              Please type your name/a message to send ( for Identification)
             </label>
             <Input
               type="text"
