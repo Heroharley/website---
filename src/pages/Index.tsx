@@ -93,7 +93,7 @@ const Index = () => {
   // Valentine message
   const letterMsg = (
     <span className="text-pink-700 font-valentine text-center text-2xl md:text-3xl animate-fade-in drop-shadow-lg tracking-wide z-10">
-      Helo
+      text-1
     </span>
   );
 
@@ -131,7 +131,7 @@ const Index = () => {
             ) : (
               // Letter stays open but actual input goes below the envelope
               <span className="text-pink-700 font-bold text-lg text-center">
-                Wana go
+                text-2
               </span>
             )}
           </AnimatedLetter>
